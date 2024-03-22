@@ -1,0 +1,121 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+
+  build-price-fetcher:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Build the indexer image
+      run: docker build price-fetcher --tag badconfig/price-fetcher
+
+    - name: Login to dockerhub
+      run: docker login -u="${{ vars.DOCKER_USERNAME }}" -p="${{ secrets.DOCKER_PASSWORD }}"
+
+    - name: push image
+      run: docker push badconfig/price-fetcher
+
+  build-planner:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Build the indexer image
+      run: docker build planner --tag badconfig/planner
+
+    - name: Login to dockerhub
+      run: docker login -u="${{ vars.DOCKER_USERNAME }}" -p="${{ secrets.DOCKER_PASSWORD }}"
+
+    - name: push image
+      run: docker push badconfig/planner
+
+  build-backend-api:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Build the Docker image
+      run: docker build api --tag badconfig/backend-api
+
+    - name: Login to dockerhub
+      run: docker login -u="${{ vars.DOCKER_USERNAME }}" -p="${{ secrets.DOCKER_PASSWORD }}"
+
+    - name: push image
+      run: docker push badconfig/backend-api 
+
+  build-0x-api:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Build the Docker image
+      run: docker build 0x-api --tag badconfig/0x-api
+
+    - name: Login to dockerhub
+      run: docker login -u="${{ vars.DOCKER_USERNAME }}" -p="${{ secrets.DOCKER_PASSWORD }}"
+
+    - name: push image
+      run: docker push badconfig/0x-api 
+
+  build-revenue-fetcher:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Build the Docker image
+      run: docker build revenue-fetcher --tag badconfig/revenue-fetcher
+
+    - name: Login to dockerhub
+      run: docker login -u="${{ vars.DOCKER_USERNAME }}" -p="${{ secrets.DOCKER_PASSWORD }}"
+
+    - name: push image
+      run: docker push badconfig/revenue-fetcher 
+
+  build-mock-oracle:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Build the Docker image
+      run: docker build mock-oracle --tag badconfig/mock-oracle
+
+    - name: Login to dockerhub
+      run: docker login -u="${{ vars.DOCKER_USERNAME }}" -p="${{ secrets.DOCKER_PASSWORD }}"
+
+    - name: push image
+      run: docker push badconfig/mock-oracle 
+
+  build-log-fetcher:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Build the Docker image
+      run: docker build log-fetcher --tag badconfig/log-fetcher
+
+    - name: Login to dockerhub
+      run: docker login -u="${{ vars.DOCKER_USERNAME }}" -p="${{ secrets.DOCKER_PASSWORD }}"
+
+    - name: push image
+      run: docker push badconfig/log-fetcher 
